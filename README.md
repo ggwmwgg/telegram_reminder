@@ -1,22 +1,26 @@
-## Telegram Бот уведомлений на Aiogram
+<table align="right">
+ <tr><td><b><img src="https://github.com/ggwmwgg/ggwmwgg/blob/main/images/us_s.png" height="13" alt=""> English</b></td></tr>
+ <tr><td><a href="README_ru.md"><img src="https://github.com/ggwmwgg/ggwmwgg/blob/main/images/ru.png" height="13" alt=""> Русский</a></td></tr>
+</table>
+## Notifications Telegram Bot (Aiogram)
 
-### Описание
-Менеджер выгружает данные из файла Google Sheets ([Смотреть Пример](https://docs.google.com/spreadsheets/d/1vBHTh28dYkEt1_PDrR8PVa5tyzvFGb2ufEWTcnwzZy0/ "Пример")) в базу данных, сотруднику приходит уведомление с прикрепленной инлайн клавиатурой (Выполнено/Не сделано). Если сотрудник в течение answer_time не нажимает ни на одну из кнопок, они удаляются и менеджеру приходит соответствующее уведомление, если же сотрудник нажал на одну из кнопок - менеджеру приходит уведомление на какую именно, клавиатура также удаляется.
+### Description
+```Manager``` sends link to Google Sheets ([Смотреть Пример](https://docs.google.com/spreadsheets/d/1vBHTh28dYkEt1_PDrR8PVa5tyzvFGb2ufEWTcnwzZy0/ "Пример")) data loaded to db, worker gets notification with inline keyboard attached (Done/Not completed). If an employee does not press any of the buttons within ```answer_time```, buttons are removed and the manager receives a corresponding notification. If, however, the employee pressed one of the buttons, the manager receives a notification on which one exactly, and the keyboard is also removed
 Было создано несколько обработчиков и функций:
-- ```/start``` - Стартовая команда, которая добавляет пользователя в базу данных.
-- ```/m_add TG_ID``` - Команда для добавления менеджера в базу данных.
-- ```handlers/users/acl_test``` - Обработчик для работы команды выше.
-- ```handlers/users/echo``` - Обработка неизвестных команд.
-- ```handlers/users/start``` - Обработка основных запросов (регистрация, отправка даты менеджером, обработка нажатий на кнопки в уведомлении).
-- ```data/config.py``` - Файл с конфигурацией, в котором хранятся данные для подключения к базе данных, Telegram API Token, а также ID администраторов.
-- ```utils/db_api/db_api.py``` - Файл с функциями для работы с базой данных, проверкой последних уведомлений и их отправки.
-- ```utils/db_api/models.py``` - Файл с моделями базы данных.
-- ```utils/get_data.py``` - Файл с функцией, которая принимает ссылку и возвращает лист словарей для дальнейшего добавления в бд.
-- ```utils/notify_admins.py``` - Файл с функцией, которая отправляет уведомление администратору.
-- Также в боте присутствует флуд контроль.
-- В функции удаления клавиатуры с уведомлений присутствует очистка от уже выполненных задач.
+- ```/start``` - The start command that adds the user to the database.
+- ```/m_add TG_ID``` - Command for adding a manager to the database.
+- ```handlers/users/acl_test``` - Handler for the operation of the command above.
+- ```handlers/users/echo``` - Processing of unknown commands.
+- ```handlers/users/start``` - Processing of basic requests (registration, sending data by the manager, processing button presses in the notification).
+- ```data/config.py``` - Configuration file that stores data for connecting to the database, Telegram API Token, as well as administrator IDs.
+- ```utils/db_api/db_api.py``` - File with functions for working with the database, checking the latest notifications and sending them.
+- ```utils/db_api/models.py``` - File with database models.
+- ```utils/get_data.py``` - File with a function that takes a link and returns a list of dictionaries for further addition to the database.
+- ```utils/notify_admins.py``` - File with a function that sends a notification to the administrator.
+- The bot also has flood control.
+- The function for removing the keyboard from notifications includes clearing from already completed tasks.
 
-#### Используемые технологии:
+#### Technologies used:
 - *Python*
 - *Aiogram*
 - *Asyncio*
@@ -26,21 +30,17 @@
 - *Docker*
 - *Docker-compose*
 
-#### Конфигурация:
-- Установите ```requirements.txt```.
-- Установите свои данные для подключения к PostgreSQL и Telegram API Token в ```.env.dist```, переименуйте его в ```.env```.
-- Установите свой Telegram ID в data/config.py на строчке 7.
-- Установите свои данные для healthcheck-a в ```docker-compose.yml``` на строчке 23.
-- Соберите контейнеры с помощью ```docker-compose build```.
-- Запустите контейнеры с помощью ```docker-compose up```, вы можете добавить флаг ```-d``` для запуска в фоновом режиме.
-- Для остановки контейнеров используйте ```docker-compose down```.
+#### Configuration:
+- Set your data for connecting to PostgreSQL and Telegram API Token in ```.env.dist```, rename it to ```.env```.
+- Set your Telegram ID in data/config.py on line ```7```.
+- Set your data for the healthcheck in ```docker-compose.yml``` on line 23.
+- Build the containers using ```docker-compose build```.
+- Start the containers using ```docker-compose up```, you can add the ```-d``` flag to run in the background.
+- To stop the containers, use ```docker-compose down```.
 
-#### Использование:
-- После установки себя администратором, в боте, после старта, напишите команду ```/m_add TG_ID``` где ```TG_ID``` это ID менеджера.
-- Для загрузки данных следуйте инструкции и структуре, указанной в примерах.
+#### Usage:
+- After setting yourself as an administrator, in the bot, after starting, write the command ```/m_add TG_ID``` where ```TG_ID``` is the ID manager ```Telegram ID```.
+- To upload data, follow the instructions and structure indicated in the examples.
 
-
-
-#### Возможные улучшения:
-Запросы на изменение приветствуются. Для внесения значительных изменений, пожалуйста, сначала создайте проблему, чтобы обсудить, что вы хотите изменить.
-
+#### Contributing
+Pull requests are welcome. For major changes please open an issue first.
