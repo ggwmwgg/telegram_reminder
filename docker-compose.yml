@@ -1,0 +1,40 @@
+version: '3'
+services:
+  telegram_reminder:
+    build: .
+    env_file: .env
+    container_name: telegram_reminder
+    volumes:
+      - bot:/telegram_reminder
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    entrypoint: /telegram_reminder/entry.sh
+    networks:
+      - telegram_reminder_network
+  db:
+    image: postgres
+    restart: always
+    env_file: .env
+    container_name: db
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "telegram_reminder_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - database:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - telegram_reminder_network
+
+volumes:
+    database:
+    bot:
+
+networks:
+    telegram_reminder_network:
+      driver: bridge
